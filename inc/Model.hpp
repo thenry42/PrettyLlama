@@ -13,6 +13,7 @@ class Model
 		string 	_sizeType;
 		string 	_prompt;
 		string 	_answer;
+		bool	needToAnswer;
 
 		Model();
 		Model(const Model &);
