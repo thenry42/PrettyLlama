@@ -1,6 +1,4 @@
-#include "Meta.hpp"
-#include "Model.hpp"
-#include 
+#include "ollama_gui.hpp"
 
 int	main(int ac, char **av)
 {

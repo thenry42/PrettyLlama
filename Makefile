@@ -22,7 +22,7 @@ ${NAME}:		${OBJS}
 				${CXX} ${INC} ${CXXFLAGS} $^ -o $@
 
 ${OBJDIR}/%.o:	%.cpp | ${OBJDIR}
-				${CXX} ${INC} ${CXXFLAGS} -MMD -MP -c $< -o $@
+				${CXX} ${INC} ${CXXFLAGS} -lglfw -MMD -MP -c $< -o $@
 
 ${OBJDIR}:		
 				mkdir -p ${OBJDIR}
