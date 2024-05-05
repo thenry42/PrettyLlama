@@ -5,5 +5,8 @@
 #include "Meta.hpp"
 #include "Model.hpp"
 #include "../imgui/imgui.h"
+#include <GL/gl.h>
+#include <stdio.h>
+#include <GLFW/glfw3.h>
 
 #endif

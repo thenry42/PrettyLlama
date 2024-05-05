@@ -17,5 +17,8 @@ int	main(int ac, char **av)
 	// Aks models for answers
 	meta.askModels();
 
+	// Show Demo Window
+	ImGui::ShowDemoWindow();
+
 	return (EXIT_SUCCESS);
 }
