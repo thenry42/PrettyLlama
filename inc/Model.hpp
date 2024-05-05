@@ -13,23 +13,25 @@ class Model
 		string 	_sizeType;
 		string 	_prompt;
 		string 	_answer;
-		bool	needToAnswer;
+		bool	_needToAnswer;
 
 		Model();
 		Model(const Model &);
 		Model &operator=(const Model &);
 
 	public:
-		Model(string name, string size, string sizeType);
+		Model(string infos);
 		~Model();
 
 		string getName() const;
 		string getSize() const;
 		string getSizeType() const;
 		string getPrompt() const;
+		bool getStatus() const;
 
 		void setPrompt(string prompt);
 		void setAnswer(string answer);
+		void setStatus(bool status);
 };
 
 #endif

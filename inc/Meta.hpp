@@ -22,7 +22,6 @@ class Meta
 		Meta(const Meta &);
 		Meta &operator=(const Meta &);
 		
-		void addModel(string name, string size, string sizeType);
 		Model* getModelBynName(string name);
 
 	public:

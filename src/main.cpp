@@ -1,5 +1,6 @@
 #include "Meta.hpp"
 #include "Model.hpp"
+#include 
 
 int	main(int ac, char **av)
 {
@@ -14,7 +15,6 @@ int	main(int ac, char **av)
 
 	// Pass user prompt to every model
 	meta.setPrompt(av[1]);
-	//meta.printModels();
 
 	// Aks models for answers
 	meta.askModels();

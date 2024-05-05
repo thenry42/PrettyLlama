@@ -11,12 +11,6 @@ Meta &Meta::operator=(const Meta &)
     return (*this);
 }
 
-void Meta::addModel(string name, string size, string sizeType)
-{
-    Model *model = new Model(name, size, sizeType);
-    _models[name] = model;
-}
-
 void Meta::getModelsInfo()
 {
     // GET ALL MODELS (name | SIZE | SIZE_TYPE)
@@ -36,26 +30,20 @@ void Meta::getModelsInfo()
     }
     pclose(pipe);
 
-    // PUT EVERY MODEL INFO INTO A VECTOR
+    // CREATE MODELS
     size_t pos = 0;
     vector<string> models;
     while ((pos = result.find("\n", pos)) != string::npos)
     {
-        models.push_back(result.substr(0, pos));
+        Model *model = new Model(result.substr(0, pos));
+        _models[model->getName()] = model;
         result.erase(0, pos + 1);
         pos = 0;
     }
 
-    // ADD MODELS TO _models
-    for (long unsigned int i = 0; i < models.size(); i++)
-    {
-        string name = models[i].substr(0, models[i].find(" "));
-        size_t firstSpaceIndex = models[i].find(" ");
-        size_t secondSpaceIndex = models[i].find(" ", firstSpaceIndex + 1);
-        string size = models[i].substr(firstSpaceIndex + 1, secondSpaceIndex - firstSpaceIndex - 1);
-        string sizeType = models[i].substr(secondSpaceIndex + 1);
-        addModel(name, size, sizeType);
-    }
+    // MODELS TO IGNORE
+    _models["dolphin-mixtral"]->setStatus(false);
+    _models["starcoder2"]->setStatus(false);
 }
 
 Model* Meta::getModelBynName(string name)
@@ -84,20 +72,17 @@ void Meta::setPrompt(string prompt)
 
 void Meta::askModels()
 {
-    /* // Iterate thru all models and ask for answers
+    // Iterate thru all models and ask for answers
     for (std::map<string, Model*>::iterator it = _models.begin(); it != _models.end(); it++)
     {
         askOneModel(it->second);
     }
-    */
-    
-    askOneModel(getModelBynName("llama3"));
-    askOneModel(getModelBynName("mistral"));
-    askOneModel(getModelBynName("phi3"));
 }
 
 void Meta::askOneModel(Model *model)
 {
+    if (!model->getStatus())
+        return ;
     string cmd = "ollama run " + model->getName() + " " + model->getPrompt();
     FILE *pipe = popen(cmd.c_str(), "r");
     if (!pipe)
