@@ -3,7 +3,17 @@
 
 int	main(int ac, char **av)
 {
-	(void)ac, (void)av;
+	Meta meta;
 
-	return (0);
+	if (ac != 2)
+		return (EXIT_FAILURE);
+
+	// Get models info using ollama list
+	meta.getModelsInfo();
+	meta.printModels();
+
+	// Pass user prompt to every model
+	meta.answerPrompt(av[1]);
+
+	return (EXIT_SUCCESS);
 }

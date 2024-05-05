@@ -1,10 +1,12 @@
 SRCS		=	src/main.cpp \
+				src/Meta.cpp \
+				src/Model.cpp \
 
 NAME		=	vicuna
 
 OBJDIR		=	obj
 
-CXXFLAGS	=	-Wall -Wextra -Werror --std=c++98
+CXXFLAGS	=	-Wall -Wextra -Werror -g
 
 CXX			=	c++
 
