@@ -70,10 +70,50 @@ void Meta::printModels()
         cout << "Name: " << it->first << endl;
         cout << "Size: " << it->second->getSize() << endl;
         cout << "Size Type: " << it->second->getSizeType() << endl;
+        cout << "Prompt: " << it->second->getPrompt() << endl;
     }
 }
 
-void Meta::answerPrompt(string prompt)
+void Meta::setPrompt(string prompt)
 {
-    cout << "your question is: '" << prompt  << "'." << endl;
+    for (std::map<string, Model*>::iterator it = _models.begin(); it != _models.end(); it++)
+    {
+        it->second->setPrompt(prompt);
+    }
+}
+
+void Meta::askModels()
+{
+    /* // Iterate thru all models and ask for answers
+    for (std::map<string, Model*>::iterator it = _models.begin(); it != _models.end(); it++)
+    {
+        askOneModel(it->second);
+    }
+    */
+    
+    askOneModel(getModelBynName("llama3"));
+    askOneModel(getModelBynName("mistral"));
+    askOneModel(getModelBynName("phi3"));
+}
+
+void Meta::askOneModel(Model *model)
+{
+    string cmd = "ollama run " + model->getName() + " " + model->getPrompt();
+    FILE *pipe = popen(cmd.c_str(), "r");
+    if (!pipe)
+    {
+        cerr << "popen failed" << endl;
+        return ;
+    }
+    char buffer[128];
+    string answer = "";
+    while (!feof(pipe))
+    {
+        if (fgets(buffer, 128, pipe) != NULL)
+            answer += buffer;
+    }
+    pclose(pipe);
+    answer.erase(answer.size() - 1);
+    model->setAnswer(answer);
+    cout << model->getName() << " answer: " << answer;
 }

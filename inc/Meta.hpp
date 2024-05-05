@@ -31,7 +31,9 @@ class Meta
 
 		void getModelsInfo();
 		void printModels();
-		void answerPrompt(string prompt);
+		void setPrompt(string prompt);
+		void askModels();
+		void askOneModel(Model *model);
 };
 
 #endif

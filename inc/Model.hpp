@@ -12,6 +12,7 @@ class Model
 		string	_size;
 		string 	_sizeType;
 		string 	_prompt;
+		string 	_answer;
 
 		Model();
 		Model(const Model &);
@@ -24,6 +25,10 @@ class Model
 		string getName() const;
 		string getSize() const;
 		string getSizeType() const;
+		string getPrompt() const;
+
+		void setPrompt(string prompt);
+		void setAnswer(string answer);
 };
 
 #endif

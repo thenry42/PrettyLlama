@@ -25,3 +25,18 @@ string Model::getSizeType() const
 {
     return (_sizeType);
 }
+
+string Model::getPrompt() const
+{
+    return (_prompt);
+}
+
+void Model::setPrompt(string prompt)
+{
+    _prompt = prompt;
+}
+
+void Model::setAnswer(string answer)
+{
+    _answer = answer;
+}

@@ -10,10 +10,14 @@ int	main(int ac, char **av)
 
 	// Get models info using ollama list
 	meta.getModelsInfo();
-	meta.printModels();
+	//meta.printModels();
 
 	// Pass user prompt to every model
-	meta.answerPrompt(av[1]);
+	meta.setPrompt(av[1]);
+	//meta.printModels();
+
+	// Aks models for answers
+	meta.askModels();
 
 	return (EXIT_SUCCESS);
 }
