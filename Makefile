@@ -1,7 +1,13 @@
 SRCS		=	src/main.cpp \
 				src/Meta.cpp \
 				src/Model.cpp \
-				imgui/*.cpp \
+				src/imgui_impl_glfw.cpp \
+				src/imgui_impl_opengl3.cpp \
+				src/imgui.cpp \
+				src/imgui_draw.cpp \
+				src/imgui_widgets.cpp \
+				src/imgui_demo.cpp \
+				src/imgui_tables.cpp \
 
 NAME		=	vicuna
 
@@ -9,7 +15,7 @@ OBJDIR		=	obj
 
 CXXFLAGS	=	-Wall -Wextra -Werror -g
 
-LIBS		=	-lglfw -lGL -lglfw3
+LIBS		=	-lglfw -lGL -lglfw3 -lGLFW -lgdi32 -lopencv -lopengl32
 
 CXX			=	c++
 
@@ -17,7 +23,7 @@ RM			=	rm -rf
 
 OBJS		=	${patsubst %.cpp, ${SRCS:%.cpp=${OBJDIR}/%.o}, ${SRCS}}
 
-INC		=	-I inc/ -I imgui/
+INC		=	-I inc/
 
 all:			${NAME}
 
@@ -30,7 +36,6 @@ ${OBJDIR}/%.o:	%.cpp | ${OBJDIR}
 ${OBJDIR}:		
 				mkdir -p ${OBJDIR}
 				mkdir -p ${OBJDIR}/src/
-				mkdir -p ${OBJDIR}/imgui/
 
 clean:		
 				${RM} ${OBJDIR}
