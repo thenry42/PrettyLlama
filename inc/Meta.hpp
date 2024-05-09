@@ -28,7 +28,7 @@ class Meta
 		Meta();
 		~Meta();
 
-		void getModelsInfo();
+		void getModelInfos();
 		void printModels();
 		void setPrompt(string prompt);
 		void askModels();

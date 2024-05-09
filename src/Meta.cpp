@@ -11,7 +11,7 @@ Meta &Meta::operator=(const Meta &)
     return (*this);
 }
 
-void Meta::getModelsInfo()
+void Meta::getModelInfos()
 {
     // GET ALL MODELS (name | SIZE | SIZE_TYPE)
     string cmd = "ollama list | awk '{print $1, $3, $4}' | sed 's/:latest//' | tail -n +2";
