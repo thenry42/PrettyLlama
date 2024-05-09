@@ -1,4 +1,5 @@
-#include "ollama_gui.hpp"
+#include "Meta.hpp"
+#include "Model.hpp"
 
 int	main(int ac, char **av)
 {
@@ -18,7 +19,7 @@ int	main(int ac, char **av)
 	meta.askModels();
 
 	// Show Demo Window
-	ImGui::ShowDemoWindow();
+	//ImGui::ShowDemoWindow();
 
 	return (EXIT_SUCCESS);
 }
