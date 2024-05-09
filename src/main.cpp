@@ -10,14 +10,18 @@ int	main(int ac, char **av)
 {
 	Meta meta;
 
-	(void)ac, (void)av, (void)meta;
-
+	if (ac != 2)
+	{
+		std::cerr << "Usage: " << av[0] << " <prompt>" << std::endl;
+		return (EXIT_FAILURE);
+	}
+	
 	// Get models info using ollama list
-	//meta.getModelInfos();
-	//meta.printModels();
+	meta.getModelInfos();
+	meta.printModels();
 
 	// Pass user prompt to every model
-	//meta.setPrompt(av[1]);
+	meta.setPrompt(av[1]);
 
 	// Aks models for answers
 	//meta.askModels();
