@@ -12,7 +12,7 @@ int	main(void)
 
 	// Get Screen size
 	int *size = getScreenSize();
-	std::cout << "Screen size: " << size[0] << "x" << size[1] << std::endl;
+	//std::cout << "Screen size: " << size[0] << "x" << size[1] << std::endl;
 	
 	// Get models info using ollama list
 	meta.getModelInfos();
