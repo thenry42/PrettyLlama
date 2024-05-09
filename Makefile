@@ -47,6 +47,7 @@ ${OBJDIR}:
 
 clean:		
 				${RM} ${OBJDIR}
+				${RM} imgui.ini
 
 fclean:			clean
 				${RM} ${NAME}
