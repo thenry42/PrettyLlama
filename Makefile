@@ -1,10 +1,24 @@
-#IMGUI SDL2 SDLRENDERER2 RULES
+#===================================================================#
+# IMGUI BUILD THAT WORK MY ASUS G14                                 #
+#===================================================================#
+
+# example_glfw_opengl2 (not the greatest)
+# example_glfw_opengl3 (not the greatest)
+# example_sdl2_opengl3
+# example_sdl2_opengl2
+# example_sdl2_sdlrenderer2
+
+#===================================================================#
+# IMGUI SDL2 SDLRENDERER2 RULES                                     #
+#===================================================================#
 
 IMGUIFLAGS 	= -I imgui/ -I imgui/backends -g `sdl2-config --cflags`
 
 LIBS		= -lGL -ldl `sdl2-config --libs`
 
-#==============================================================================
+#===================================================================#
+# MAKEFILE RULES                                                    #
+#===================================================================#
 
 SRCS		=	src/main.cpp \
 				src/Meta.cpp \
