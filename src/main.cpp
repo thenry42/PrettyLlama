@@ -6,15 +6,9 @@
 #include "imgui_impl_sdlrenderer2.h"
 #include <SDL2/SDL.h>
 
-int	main(int ac, char **av)
+int	main(void)
 {
 	Meta meta;
-
-	if (ac != 2)
-	{
-		std::cerr << "Usage: " << av[0] << " <prompt>" << std::endl;
-		return (EXIT_FAILURE);
-	}
 
 	// Get Screen size
 	int *size = getScreenSize();
@@ -24,7 +18,7 @@ int	main(int ac, char **av)
 	meta.getModelInfos();
 
 	// Pass user prompt to every model
-	meta.setPrompt(av[1]);
+	meta.setPrompt("What is love?");
 
 	// Aks models for answers
 	//meta.askModels();
