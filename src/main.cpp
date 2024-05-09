@@ -1,5 +1,6 @@
 #include "Meta.hpp"
 #include "Model.hpp"
+#include "utils.hpp"
 #include "imgui.h"
 #include "imgui_impl_sdl2.h"
 #include "imgui_impl_sdlrenderer2.h"
@@ -15,10 +16,13 @@ int	main(int ac, char **av)
 		std::cerr << "Usage: " << av[0] << " <prompt>" << std::endl;
 		return (EXIT_FAILURE);
 	}
+
+	// Get Screen size
+	int *size = getScreenSize();
+	std::cout << "Screen size: " << size[0] << "x" << size[1] << std::endl;
 	
 	// Get models info using ollama list
 	meta.getModelInfos();
-	meta.printModels();
 
 	// Pass user prompt to every model
 	meta.setPrompt(av[1]);
@@ -42,7 +46,7 @@ int	main(int ac, char **av)
 
 	// Create window with SDL_Renderer graphics context
 	SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
-	SDL_Window* window = SDL_CreateWindow("Dear ImGui SDL2+SDL_Renderer example", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, window_flags);
+	SDL_Window* window = SDL_CreateWindow("Ollama_GUI <3", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, size[0], size[1], window_flags);
 	if (window == nullptr)
 	{
 		std::cerr << SDL_GetError() << std::endl;
@@ -98,7 +102,7 @@ int	main(int ac, char **av)
 		// Rendering
 		ImGui::Render();
 		SDL_RenderSetScale(renderer, io.DisplayFramebufferScale.x, io.DisplayFramebufferScale.y);
-		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+		SDL_SetRenderDrawColor(renderer, 100, 50, 50, 255);
 		SDL_RenderClear(renderer);
 		ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
 		SDL_RenderPresent(renderer);
