@@ -44,6 +44,7 @@ void Meta::getModelInfos()
     // MODELS TO IGNORE
     _models["dolphin-mixtral"]->setStatus(false);
     _models["starcoder2"]->setStatus(false);
+    _models["mixtral"]->setStatus(false);
 }
 
 Model* Meta::getModelBynName(string name)
