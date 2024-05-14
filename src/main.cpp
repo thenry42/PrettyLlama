@@ -1,6 +1,7 @@
 #include "Meta.hpp"
 #include "Model.hpp"
 #include "utils.hpp"
+#include "interface.hpp"
 #include "imgui.h"
 #include "imgui_impl_sdl2.h"
 #include "imgui_impl_sdlrenderer2.h"
@@ -62,6 +63,7 @@ int	main(void)
 
 	// Test state
 	bool show_demo_window = true;
+	bool my_own_dear_imgui_window = false;
 
 	// Main loop
 	bool done = false;
@@ -85,6 +87,10 @@ int	main(void)
 		// Show the ImGui demo window. Most of the sample code is in ImGui::ShowDemoWindow()
 		if (show_demo_window)
 			ImGui::ShowDemoWindow(&show_demo_window);
+
+		// Show our own dear ImGui window
+		if (my_own_dear_imgui_window)
+			ShowMyOwnDearImGuiWindow(&my_own_dear_imgui_window);
 
 		// Rendering
 		ImGui::Render();
