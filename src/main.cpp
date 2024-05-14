@@ -16,7 +16,7 @@ int	main(void)
 	//std::cout << "Screen size: " << size[0] << "x" << size[1] << std::endl;
 	
 	// Get models info using ollama list
-	meta.getModelInfos();
+	meta.getOllamalist();
 
 	// Pass user prompt to every model
 	meta.setPrompt("What is love?");
@@ -62,8 +62,8 @@ int	main(void)
 	ImGui_ImplSDLRenderer2_Init(renderer);
 
 	// Test state
-	bool show_demo_window = true;
-	bool my_own_dear_imgui_window = false;
+	bool show_demo_window = false;
+	bool my_own_dear_imgui_window = true;
 
 	// Main loop
 	bool done = false;
@@ -90,12 +90,12 @@ int	main(void)
 
 		// Show our own dear ImGui window
 		if (my_own_dear_imgui_window)
-			ShowMyOwnDearImGuiWindow(&my_own_dear_imgui_window);
+			ShowMyOwnDearImGuiWindow(&my_own_dear_imgui_window, &meta);
 
 		// Rendering
 		ImGui::Render();
 		SDL_RenderSetScale(renderer, io.DisplayFramebufferScale.x, io.DisplayFramebufferScale.y);
-		SDL_SetRenderDrawColor(renderer, 100, 50, 50, 255);
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		SDL_RenderClear(renderer);
 		ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
 		SDL_RenderPresent(renderer);

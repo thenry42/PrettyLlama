@@ -22,16 +22,18 @@ class Meta
 		Meta(const Meta &);
 		Meta &operator=(const Meta &);
 		
-		Model* getModelBynName(string name);
-
 	public:
 		Meta();
 		~Meta();
 
-		void getModelInfos();
-		void printModels();
+		Model* getModelByName(string name);
+		Model* getModelByIndex(int index);
+		std::map<string, Model*> getModels(void);
+
+		void getOllamalist(void);
+		void printModels(void);
 		void setPrompt(string prompt);
-		void askModels();
+		void askModels(void);
 		void askOneModel(Model *model);
 };
 

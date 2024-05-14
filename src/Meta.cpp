@@ -11,7 +11,7 @@ Meta &Meta::operator=(const Meta &)
     return (*this);
 }
 
-void Meta::getModelInfos()
+void Meta::getOllamalist(void)
 {
     // GET ALL MODELS (name | SIZE | SIZE_TYPE)
     string cmd = "ollama list | awk '{print $1, $3, $4}' | sed 's/:latest//' | tail -n +2";
@@ -47,9 +47,21 @@ void Meta::getModelInfos()
     _models["mixtral"]->setStatus(false);
 }
 
-Model* Meta::getModelBynName(string name)
+Model* Meta::getModelByName(string name)
 {
     return (_models[name]);
+}
+
+Model* Meta::getModelByIndex(int index)
+{
+    map<string, Model*>::iterator it = _models.begin();
+    advance(it, index);
+    return (it->second);
+}
+
+std::map<string, Model*> Meta::getModels(void)
+{
+    return (_models);
 }
 
 void Meta::printModels()

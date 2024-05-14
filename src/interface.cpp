@@ -1,7 +1,8 @@
 #include "interface.hpp"
 #include "imgui.h"
+#include "Meta.hpp"
 
-void ShowMyOwnDearImGuiWindow(bool* p_open)
+void ShowMyOwnDearImGuiWindow(bool* p_open, Meta* meta)
 {
     ImGuiIO& io = ImGui::GetIO();
     ImGui::SetNextWindowSize(ImVec2(io.DisplaySize.x, io.DisplaySize.y), ImGuiCond_FirstUseEver);
@@ -32,6 +33,7 @@ void ShowMyOwnDearImGuiWindow(bool* p_open)
     if (unsaved_document)   window_flags |= ImGuiWindowFlags_UnsavedDocument;
     if (no_close)           p_open = NULL; // Don't pass our bool* to Begin
 
+    // DO NOT REMOVE
     if (!ImGui::Begin("Ollama <3", p_open, window_flags))
     {
         ImGui::End();
@@ -42,15 +44,19 @@ void ShowMyOwnDearImGuiWindow(bool* p_open)
     {
         if (ImGui::BeginMenu("File"))
         {
-            if (ImGui::MenuItem("Close")) *p_open = false;
+            if (ImGui::MenuItem("Close"))
+                *p_open = false;
             ImGui::EndMenu();
         }
         if (ImGui::BeginMenu("Models"))
         {
+            std::map<string, Model*> models = meta->getModels();
+            for (std::map<string, Model*>::iterator it = models.begin(); it != models.end(); it++)
+                ImGui::MenuItem(it->first.c_str());
+
             ImGui::EndMenu();
         }
         ImGui::EndMenuBar();
     }
-
     ImGui::End();
 }
