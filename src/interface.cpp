@@ -52,8 +52,9 @@ void ShowMyOwnDearImGuiWindow(bool* p_open, Meta* meta)
         {
             std::map<string, Model*> models = meta->getModels();
             for (std::map<string, Model*>::iterator it = models.begin(); it != models.end(); it++)
-                ImGui::MenuItem(it->first.c_str());
-
+                if (ImGui::Button(it->first.c_str()))
+                    std::cout << "Button clicked: " << it->first << std::endl;
+            
             ImGui::EndMenu();
         }
         ImGui::EndMenuBar();
