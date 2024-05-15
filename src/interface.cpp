@@ -46,6 +46,7 @@ void ShowMyOwnDearImGuiWindow(bool* p_open, Meta* meta)
         {
             if (ImGui::MenuItem("Close"))
                 *p_open = false;
+            ImGui::MenuItem("Help");
             ImGui::EndMenu();
         }
         if (ImGui::BeginMenu("Models"))
