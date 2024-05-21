@@ -1,1 +1,1 @@
-# ollama_GUI
+# ollama_UI
