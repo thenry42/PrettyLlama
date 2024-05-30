@@ -40,6 +40,7 @@ void ShowMyOwnDearImGuiWindow(bool* p_open, Meta* meta)
         return;
     }
 
+    // MENU BAR
     if (ImGui::BeginMenuBar())
     {
         if (ImGui::BeginMenu("File"))
@@ -60,5 +61,29 @@ void ShowMyOwnDearImGuiWindow(bool* p_open, Meta* meta)
         }
         ImGui::EndMenuBar();
     }
+
+    // MAIN WINDOW 
+    static bool info_tab = true;
+    if (ImGui::BeginTabBar("TabBar"))
+    {
+        // INFO POP-UP
+        if (info_tab)
+        {    
+            if (ImGui::TabItemButton("<3", ImGuiTabItemFlags_Leading))
+            {
+                if (ImGui::BeginPopupContextItem())
+                {
+                    ImGui::EndPopup();
+                }
+            }
+            ImGui::SetItemTooltip("Add models with love <3");
+        }
+
+        // MODELS TAB
+        /* Boucle qui itere sur tous les models dispo en tab */
+
+        ImGui::EndTabBar();
+    }
+
     ImGui::End();
 }
