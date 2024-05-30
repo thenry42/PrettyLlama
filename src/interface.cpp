@@ -43,13 +43,6 @@ void ShowMyOwnDearImGuiWindow(bool* p_open, Meta* meta)
     // MENU BAR
     if (ImGui::BeginMenuBar())
     {
-        if (ImGui::BeginMenu("File"))
-        {
-            if (ImGui::MenuItem("Close"))
-                *p_open = false;
-            ImGui::MenuItem("Help");
-            ImGui::EndMenu();
-        }
         if (ImGui::BeginMenu("Models"))
         {
             std::map<string, Model*> models = meta->getModels();
@@ -59,6 +52,13 @@ void ShowMyOwnDearImGuiWindow(bool* p_open, Meta* meta)
             
             ImGui::EndMenu();
         }
+        if (ImGui::BeginMenu("Help"))
+        {
+            if (ImGui::MenuItem("Info"))
+                std::cout << "Info clicked" << std::endl;
+            ImGui::EndMenu();
+        }
+        
         ImGui::EndMenuBar();
     }
 
@@ -77,6 +77,15 @@ void ShowMyOwnDearImGuiWindow(bool* p_open, Meta* meta)
                 }
             }
             ImGui::SetItemTooltip("Add models with love <3");
+            ImGui::NewLine();
+            
+            ImGui::SeparatorText("How it works");
+            ImGui::Text("This simple UI allows you to interact with ollama models.");
+            ImGui::Text("You can add models by clicking on the 'Models' tab.");
+            ImGui::Text("You can then interact with the models by clicking on the model's name.");
+            ImGui::NewLine();
+        
+            ImGui::SeparatorText("About");
         }
 
         // MODELS TAB
