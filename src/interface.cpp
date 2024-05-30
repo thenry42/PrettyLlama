@@ -78,7 +78,18 @@ void ShowMyOwnDearImGuiWindow(bool* p_open, Meta* meta)
             }
             ImGui::SetItemTooltip("Add models with love <3");
             ImGui::NewLine();
-            
+
+            // Need to use another font to make it work
+            ImGui::Text("	    ███████    ████  ████                                          ");
+            ImGui::Text("	  ███░░░░░███ ░░███ ░░███                                          ");
+            ImGui::Text("	 ███     ░░███ ░███  ░███   ██████   █████████████    ██████       ");
+            ImGui::Text("	░███      ░███ ░███  ░███  ░░░░░███ ░░███░░███░░███  ░░░░░███      ");
+            ImGui::Text("	░███      ░███ ░███  ░███   ███████  ░███ ░███ ░███   ███████      ");
+            ImGui::Text("	░░███     ███  ░███  ░███  ███░░███  ░███ ░███ ░███  ███░░███      ");
+            ImGui::Text("	 ░░░███████░   █████ █████░░████████ █████░███ █████░░████████     ");
+            ImGui::Text("	   ░░░░░░░    ░░░░░ ░░░░░  ░░░░░░░░ ░░░░░ ░░░ ░░░░░  ░░░░░░░░      ");
+            ImGui::NewLine();
+
             ImGui::SeparatorText("How it works");
             ImGui::Text("This simple UI allows you to interact with ollama models.");
             ImGui::Text("You can add models by clicking on the 'Models' tab.");
