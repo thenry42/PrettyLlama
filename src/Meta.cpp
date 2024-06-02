@@ -40,11 +40,6 @@ void Meta::getOllamalist(void)
         result.erase(0, pos + 1);
         pos = 0;
     }
-
-    // MODELS TO IGNORE
-    _models["dolphin-mixtral"]->setStatus(false);
-    _models["starcoder2"]->setStatus(false);
-    _models["mixtral"]->setStatus(false);
 }
 
 Model* Meta::getModelByName(string name)
@@ -94,7 +89,7 @@ void Meta::askModels()
 
 void Meta::askOneModel(Model *model)
 {
-    if (!model->getStatus())
+    if (!model->getNeedAnswer())
         return ;
     string cmd = "ollama run " + model->getName() + " " + model->getPrompt();
     FILE *pipe = popen(cmd.c_str(), "r");

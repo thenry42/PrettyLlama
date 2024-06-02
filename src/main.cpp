@@ -24,6 +24,16 @@ int	main(void)
 	// Aks models for answers
 	//meta.askModels();
 
+	// Setup Basic Models
+	meta.getModelByName("llama3")->setTabStatus(true);
+	meta.getModelByName("phi3")->setTabStatus(true);
+	meta.getModelByName("mistral")->setTabStatus(true);
+
+    // MODELS TO IGNORE
+    meta.getModelByName("dolphin-mixtral")->setNeedAnswer(false);
+    meta.getModelByName("starcoder2")->setNeedAnswer(false);
+    meta.getModelByName("mixtral")->setNeedAnswer(false);
+
 	// Setup SDL
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0)
 	{

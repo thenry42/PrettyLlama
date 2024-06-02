@@ -10,6 +10,7 @@ Model::Model(string infos)
     _prompt = "";
     _answer = "";
     _needToAnswer = true;
+    _tabStatus = false;
 }
 
 Model::~Model() {}
@@ -41,7 +42,7 @@ string Model::getPrompt() const
     return (_prompt);
 }
 
-bool Model::getStatus() const
+bool Model::getNeedAnswer() const
 {
     return (_needToAnswer);
 }
@@ -56,7 +57,17 @@ void Model::setAnswer(string answer)
     _answer = answer;
 }
 
-void Model::setStatus(bool status)
+void Model::setNeedAnswer(bool status)
 {
     _needToAnswer = status;
+}
+
+bool Model::getTabStatus() const
+{
+    return (_tabStatus);
+}
+
+void Model::setTabStatus(bool status)
+{
+    _tabStatus = status;
 }

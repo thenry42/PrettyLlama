@@ -14,6 +14,7 @@ class Model
 		string 	_prompt;
 		string 	_answer;
 		bool	_needToAnswer;
+		bool 	_tabStatus;
 
 		Model();
 		Model(const Model &);
@@ -27,11 +28,13 @@ class Model
 		string getSize() const;
 		string getSizeType() const;
 		string getPrompt() const;
-		bool getStatus() const;
+		bool getNeedAnswer() const;
+		bool getTabStatus() const;
 
 		void setPrompt(string prompt);
 		void setAnswer(string answer);
-		void setStatus(bool status);
+		void setNeedAnswer(bool status);
+		void setTabStatus(bool status);
 };
 
 #endif
