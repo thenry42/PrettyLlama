@@ -24,10 +24,13 @@ int	main(void)
 	// Aks models for answers
 	//meta.askModels();
 
-	// Setup Basic Models
+	// MODELS TO USE
 	meta.getModelByName("llama3")->setTabStatus(true);
 	meta.getModelByName("phi3")->setTabStatus(true);
 	meta.getModelByName("mistral")->setTabStatus(true);
+	meta.getModelByName("llama3")->setNeedAnswer(true);
+	meta.getModelByName("phi3")->setNeedAnswer(true);
+	meta.getModelByName("mistral")->setNeedAnswer(true);
 
     // MODELS TO IGNORE
     meta.getModelByName("dolphin-mixtral")->setNeedAnswer(false);
