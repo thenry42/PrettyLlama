@@ -112,7 +112,7 @@ void ShowMyOwnDearImGuiWindow(bool* p_open, Meta* meta)
                 ImGui::Text("Size: %s %s", model->getSize().c_str(), model->getSizeType().c_str());
                 ImGui::InputTextWithHint(" ", "Enter your prompt here", model->buff, IM_ARRAYSIZE(model->buff));
                 ImGui::SameLine();
-                if (ImGui::Button("Ask"))
+                if (ImGui::Button("Ask") || ImGui::IsKeyDown(ImGuiKey_Enter))
                 {
                     model->setPrompt(model->buff);
                 }
