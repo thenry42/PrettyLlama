@@ -47,9 +47,12 @@ void ShowMyOwnDearImGuiWindow(bool* p_open, Meta* meta)
         {
             std::map<string, Model*> models = meta->getModels();
             for (std::map<string, Model*>::iterator it = models.begin(); it != models.end(); it++)
+            {
                 if (ImGui::Button(it->first.c_str()))
-                    std::cout << "Button clicked: " << it->first << std::endl;
-            
+                {
+                    it->second->setTabStatus(true);
+                }
+            }
             ImGui::EndMenu();
         }
         if (ImGui::BeginMenu("Help"))
@@ -64,7 +67,7 @@ void ShowMyOwnDearImGuiWindow(bool* p_open, Meta* meta)
 
     // MAIN WINDOW 
     static bool info_tab = true;
-    if (ImGui::BeginTabBar("TabBar"))
+    if (ImGui::BeginTabBar("TabBar", ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_AutoSelectNewTabs))
     {
         // INFO POP-UP
         if (info_tab)
