@@ -69,38 +69,57 @@ void ShowMyOwnDearImGuiWindow(bool* p_open, Meta* meta)
         // INFO POP-UP
         if (info_tab)
         {    
-            if (ImGui::TabItemButton("<3", ImGuiTabItemFlags_Leading))
+            if (ImGui::BeginTabItem("<3"))
             {
                 if (ImGui::BeginPopupContextItem())
                 {
                     ImGui::EndPopup();
                 }
+
+                ImGui::SetItemTooltip("Add models with love <3");
+                ImGui::NewLine();
+
+                // Need to use another font to make it work
+                ImGui::Text("	    ███████    ████  ████                                          ");
+                ImGui::Text("	  ███░░░░░███ ░░███ ░░███                                          ");
+                ImGui::Text("	 ███     ░░███ ░███  ░███   ██████   █████████████    ██████       ");
+                ImGui::Text("	░███      ░███ ░███  ░███  ░░░░░███ ░░███░░███░░███  ░░░░░███      ");
+                ImGui::Text("	░███      ░███ ░███  ░███   ███████  ░███ ░███ ░███   ███████      ");
+                ImGui::Text("	░░███     ███  ░███  ░███  ███░░███  ░███ ░███ ░███  ███░░███      ");
+                ImGui::Text("	 ░░░███████░   █████ █████░░████████ █████░███ █████░░████████     ");
+                ImGui::Text("	   ░░░░░░░    ░░░░░ ░░░░░  ░░░░░░░░ ░░░░░ ░░░ ░░░░░  ░░░░░░░░      ");
+                ImGui::NewLine();
+
+                ImGui::SeparatorText("How it works");
+                ImGui::Text("This simple UI allows you to interact with ollama models.");
+                ImGui::Text("You can add models by clicking on the 'Models' tab.");
+                ImGui::Text("You can then interact with the models by clicking on the model's name.");
+                ImGui::NewLine();
+            
+                ImGui::SeparatorText("About");
+                ImGui::EndTabItem();
             }
-            ImGui::SetItemTooltip("Add models with love <3");
-            ImGui::NewLine();
-
-            // Need to use another font to make it work
-            ImGui::Text("	    ███████    ████  ████                                          ");
-            ImGui::Text("	  ███░░░░░███ ░░███ ░░███                                          ");
-            ImGui::Text("	 ███     ░░███ ░███  ░███   ██████   █████████████    ██████       ");
-            ImGui::Text("	░███      ░███ ░███  ░███  ░░░░░███ ░░███░░███░░███  ░░░░░███      ");
-            ImGui::Text("	░███      ░███ ░███  ░███   ███████  ░███ ░███ ░███   ███████      ");
-            ImGui::Text("	░░███     ███  ░███  ░███  ███░░███  ░███ ░███ ░███  ███░░███      ");
-            ImGui::Text("	 ░░░███████░   █████ █████░░████████ █████░███ █████░░████████     ");
-            ImGui::Text("	   ░░░░░░░    ░░░░░ ░░░░░  ░░░░░░░░ ░░░░░ ░░░ ░░░░░  ░░░░░░░░      ");
-            ImGui::NewLine();
-
-            ImGui::SeparatorText("How it works");
-            ImGui::Text("This simple UI allows you to interact with ollama models.");
-            ImGui::Text("You can add models by clicking on the 'Models' tab.");
-            ImGui::Text("You can then interact with the models by clicking on the model's name.");
-            ImGui::NewLine();
-        
-            ImGui::SeparatorText("About");
         }
 
         // MODELS TAB
         /* Boucle qui itere sur tous les models dispo en tab */
+        for (int i = 0; i < static_cast<int>(meta->getModels().size()); i++)
+        {
+            Model *model = meta->getModelByIndex(i);
+            if (model->getTabStatus() && ImGui::BeginTabItem(model->getName().c_str()))
+            {
+                ImGui::Text("Model: %s", model->getName().c_str());
+                ImGui::Text("Size: %s %s", model->getSize().c_str(), model->getSizeType().c_str());
+                ImGui::InputTextWithHint(" ", "Enter your prompt here", model->buff, IM_ARRAYSIZE(model->buff));
+                ImGui::SameLine();
+                if (ImGui::Button("Ask"))
+                {
+                    model->setPrompt(model->buff);
+                }
+                ImGui::Text("Prompt: %s", model->getPrompt().c_str());
+                ImGui::EndTabItem();
+            }
+        }
 
         ImGui::EndTabBar();
     }

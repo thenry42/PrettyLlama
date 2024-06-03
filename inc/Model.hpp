@@ -21,6 +21,8 @@ class Model
 		Model &operator=(const Model &);
 
 	public:
+		char 	buff[256];
+
 		Model(string infos);
 		~Model();
 
