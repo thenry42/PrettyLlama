@@ -33,9 +33,7 @@ int	main(void)
 	meta.getModelByName("mistral")->setNeedAnswer(true);
 
     // MODELS TO IGNORE
-    meta.getModelByName("dolphin-mixtral")->setNeedAnswer(false);
     meta.getModelByName("starcoder2")->setNeedAnswer(false);
-    meta.getModelByName("mixtral")->setNeedAnswer(false);
 
 	// Setup SDL
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0)

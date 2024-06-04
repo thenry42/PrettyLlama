@@ -118,8 +118,10 @@ void ShowMyOwnDearImGuiWindow(bool* p_open, Meta* meta)
                 if (ImGui::Button("Ask") || ImGui::IsKeyDown(ImGuiKey_Enter))
                 {
                     model->setPrompt(model->buff);
+                    meta->askOneModel(model);
                 }
                 ImGui::Text("Prompt: %s", model->getPrompt().c_str());
+                ImGui::Text("%s", model->getAnswer().c_str());
                 ImGui::EndTabItem();
             }
         }

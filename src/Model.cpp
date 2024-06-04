@@ -71,3 +71,8 @@ void Model::setTabStatus(bool status)
 {
     _tabStatus = status;
 }
+
+string Model::getAnswer() const
+{
+    return (_answer);
+}

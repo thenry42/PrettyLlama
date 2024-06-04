@@ -30,6 +30,7 @@ class Model
 		string getSize() const;
 		string getSizeType() const;
 		string getPrompt() const;
+		string getAnswer() const;
 		bool getNeedAnswer() const;
 		bool getTabStatus() const;
 
