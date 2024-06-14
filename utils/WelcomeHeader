@@ -11,7 +11,9 @@
 /list                   # List the available models
 /add [model]            # Add a model to our little ThinkTank
 /remove [model]         # Remove a model to our little ThinkTank
+/set-meta [model]       # Set Model to Meta-Model
+/rm-meta [model]        # Remove the Meta-Model
 /help                   # Get help
-/exit                   # Exit the program
+/exit OR /quit          # Exit the program
 
 

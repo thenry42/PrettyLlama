@@ -90,7 +90,12 @@ void Ollama::setPrompt(void)
     {
         _prompt = RED "PrettyLlama(" BLUE;
         for (auto it = _effectiveModels.begin(); it != _effectiveModels.end(); it++)
-            _prompt += string(it->first) + "/";
+        {
+            if (_metaModelSet == true && it->first == _metaModel->getName())
+                _prompt += string(CYAN) + it->first + string(BLUE) + "/";
+            else
+                _prompt += string(BLUE) + it->first + "/";
+        }
         _prompt.erase(_prompt.size() - 1);
         _prompt += RED ") > " RESET;
     }
@@ -103,7 +108,7 @@ void Ollama::setQuestion(string question)
 
 int Ollama::handleCommand(string cmd)
 {
-    if (cmd == "/exit")
+    if (cmd.find("/exit") != string::npos || cmd.find("/quit") != string::npos)
         return (-1);
     else if (cmd.find("/list") != string::npos)
         printModels();
@@ -182,7 +187,7 @@ void Ollama::help(void)
     cout << GREEN "/set-meta [model]: " RESET "set a specific model to Meta-Model" << endl;
     cout << GREEN "/rm-meta [model]: " RESET "remove the Meta-model" << endl;
     cout << GREEN "/ask: " RESET "ask selected models" << endl;
-    cout << GREEN "/exit: " RESET "exit" << endl;
+    cout << GREEN "/exit OR /quit: " RESET "exit" << endl;
     cout << endl;
 }
 
@@ -194,13 +199,16 @@ void Ollama::setMeta(string cmd)
             throw ModelNotFoundException();
         string name = cmd.substr(10);
         Model *model = getModelByName(name);
+        
         // SET META MODEL
-        (void)model;
+        _metaModelSet = true;
+        _metaModel = model;
     }
     catch (exception &e)
     {
         cerr << e.what() << endl;
     }
+    setPrompt();
 }
 
 void Ollama::removeMeta(string cmd)
@@ -211,13 +219,18 @@ void Ollama::removeMeta(string cmd)
             throw ModelNotFoundException();
         string name = cmd.substr(9);
         Model *model = getModelByName(name);
+    
         // REMOVE META MODEL
-        (void)model;
+        if (_metaModelSet == true && _metaModel->getName() == model->getName())
+            _metaModelSet = false;
+        else
+            throw ModelNotFoundException();
     }
     catch (exception &e)
     {
         cerr << e.what() << endl;
     }
+    setPrompt();
 }
 
 void Ollama::ask(string cmd)
@@ -231,8 +244,11 @@ void Ollama::ask(string cmd)
     }
 }
 
-void modelHeader(string name)
+void Ollama::modelHeader(string name)
 {
     cout << endl;
-    cout << CYAN "Model: " RESET << name << endl;
+    if (_metaModelSet == true && _metaModel->getName() == name)
+        cout << CYAN "Meta-Model: " RESET << name << endl;
+    else
+        cout << BLUE "Model: " RESET << name << endl;
 }

@@ -31,6 +31,8 @@ class Ollama
 
 		map<string, Model*> _models;
 		map<string, Model*> _effectiveModels;
+		Model* _metaModel;
+		bool _metaModelSet;
 		string _prompt;
 		string _question;
 	
@@ -72,8 +74,8 @@ class Ollama
 		void removeMeta(string cmd);
 		void help(void);
 		void ask(string cmd);
-};
 
-void modelHeader(string modelName);
+		void modelHeader(string modelName);
+};
 
 #endif
