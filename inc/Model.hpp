@@ -8,36 +8,24 @@ using namespace std;
 class Model
 {
 	private:
-		string 	_name;
-		string	_size;
-		string 	_sizeType;
-		string 	_prompt;
-		string 	_answer;
-		bool	_needToAnswer;
-		bool 	_tabStatus;
 
-		Model();
-		Model(const Model &);
-		Model &operator=(const Model &);
+		string 	_name;
+		string 	_question;
+		string 	_answer;
 
 	public:
-		char 	buff[256];
-
-		Model(string infos);
+		
+		Model(string name);
+		Model(const Model &);
+		Model &operator=(const Model &);	
 		~Model();
 
 		string getName() const;
-		string getSize() const;
-		string getSizeType() const;
-		string getPrompt() const;
+		string getQuestion() const;
 		string getAnswer() const;
-		bool getNeedAnswer() const;
-		bool getTabStatus() const;
 
-		void setPrompt(string prompt);
+		void setQuestion(string question);
 		void setAnswer(string answer);
-		void setNeedAnswer(bool status);
-		void setTabStatus(bool status);
 };
 
 #endif
