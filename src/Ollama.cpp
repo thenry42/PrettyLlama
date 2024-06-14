@@ -57,34 +57,18 @@ void Ollama::printModels()
     }
 }
 
-void Ollama::askModels(vector<Model*> models)
+void Ollama::askModels(map<string, Model*> models)
 {
-    for (vector<Model*>::iterator it = models.begin(); it != models.end(); it++)
+    for (map<string, Model*>::iterator it = models.begin(); it != models.end(); it++)
     {
-        askOneModel(*it);
+        askOneModel(it->second);
     }
 }
 
 void Ollama::askOneModel(Model *model)
 {
-    string cmd = "ollama run " + model->getName() + " " + model->getQuestion();
-    FILE *pipe = popen(cmd.c_str(), "r");
-    if (!pipe)
-    {
-        cerr << "popen failed" << endl;
-        return ;
-    }
-    char buffer[128];
-    string answer = "";
-    while (!feof(pipe))
-    {
-        if (fgets(buffer, 128, pipe) != NULL)
-            answer += buffer;
-    }
-    pclose(pipe);
-    answer.erase(answer.size() - 1);
-    model->setAnswer(answer);
-    cout << model->getName() << " answer: " << answer;
+    string cmd = "ollama run " + model->getName() + " \"" + getQuestion() + "\"" + " | glow";
+    system(cmd.c_str());
 }
 
 string Ollama::getPrompt(void)
@@ -169,6 +153,11 @@ int Ollama::handleCommand(string cmd)
         {
             cout << RED "No models selected" RESET << endl;
             return (0);
+        }
+        else
+        {
+            setQuestion(cmd);
+            askModels(_effectiveModels);
         }
     }
 

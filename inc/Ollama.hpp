@@ -44,7 +44,7 @@ class Ollama
 		~Ollama();
 		
 		void printModels(void);
-		void askModels(vector<Model*> models);
+		void askModels(map<string, Model*> models);
 		void askOneModel(Model *model);
 		int handleCommand(string cmd);
 		void printWelcome(void);
