@@ -65,6 +65,15 @@ class Ollama
 					return (RED "Model not found" RESET);
 				}
 		};
+
+		void add(string cmd);
+		void remove(string cmd);
+		void setMeta(string cmd);
+		void removeMeta(string cmd);
+		void help(void);
+		void ask(string cmd);
 };
+
+void modelHeader(string modelName);
 
 #endif

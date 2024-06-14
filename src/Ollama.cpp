@@ -67,6 +67,7 @@ void Ollama::askModels(map<string, Model*> models)
 
 void Ollama::askOneModel(Model *model)
 {
+    modelHeader(model->getName());
     string cmd = "ollama run " + model->getName() + " \"" + getQuestion() + "\"" + " | glow"; 
     system(cmd.c_str());
 }
@@ -107,73 +108,17 @@ int Ollama::handleCommand(string cmd)
     else if (cmd.find("/list") != string::npos)
         printModels();
     else if (cmd.find("/add") != string::npos)
-    {
-        try
-        {
-            if (cmd.size() < 5)
-                throw ModelNotFoundException();
-            string name = cmd.substr(5);
-            _effectiveModels[name] = getModelByName(name);
-        }
-        catch (exception &e)
-        {
-            cerr << e.what() << endl;
-        }
-        setPrompt();
-    }
+        add(cmd);
     else if (cmd.find("/remove") != string::npos)
-    {
-        try
-        {
-            if (cmd.size() < 8)
-                throw ModelNotFoundException();
-            string name = cmd.substr(8);
-            auto it = _effectiveModels.find(name);
-            if (it != _effectiveModels.end())
-                _effectiveModels.erase(it);
-            else
-                throw ModelNotFoundException();
-        }
-        catch (exception &e)
-        {
-            cerr << e.what() << endl;
-        }
-        setPrompt(); 
-    }
+        remove(cmd);
     else if (cmd.find("/help") != string::npos)
-    {
-        cout << endl;
-        cout << BLUE "Available commands:" RESET << endl;
-        cout << GREEN "/list: " RESET "list all models" << endl;
-        cout << GREEN "/add [model]: " RESET "add a model" << endl;
-        cout << GREEN "/remove [model]: " RESET "remove a model" << endl;
-        cout << GREEN "/set-meta [model]: " RESET "set a specific model to Meta-Model" << endl;
-        cout << GREEN "/rm-meta [model]: " RESET "remove the Meta-model" << endl;
-        cout << GREEN "/ask: " RESET "ask selected models" << endl;
-        cout << GREEN "/exit: " RESET "exit" << endl;
-        cout << endl;
-    }
+        help();
     else if (cmd.find("/set-meta") != string::npos)
-    {
-    
-    }
+        setMeta(cmd);
     else if (cmd.find("/rm-meta") != string::npos)
-    {
-
-    }
-    else //ASK MODEL(S)
-    {
-        if (_effectiveModels.size() == 0)
-        {
-            cout << RED "No models selected" RESET << endl;
-            return (0);
-        }
-        else
-        {
-            setQuestion(cmd);
-            askModels(_effectiveModels);
-        }
-    }
+        removeMeta(cmd);
+    else
+        ask(cmd); // ASK MODEL(S)
     return (0);
 }
 
@@ -189,4 +134,105 @@ void Ollama::printWelcome(void)
     }
     else
         cerr << "Unable to open file" << endl;
+}
+
+void Ollama::add(string cmd)
+{
+    try
+    {
+        if (cmd.size() < 5)
+            throw ModelNotFoundException();
+        string name = cmd.substr(5);
+        _effectiveModels[name] = getModelByName(name);
+    }
+    catch (exception &e)
+    {
+        cerr << e.what() << endl;
+    }
+    setPrompt();
+}
+
+void Ollama::remove(string cmd)
+{
+    try
+    {
+        if (cmd.size() < 8)
+            throw ModelNotFoundException();
+        string name = cmd.substr(8);
+        auto it = _effectiveModels.find(name);
+        if (it != _effectiveModels.end())
+            _effectiveModels.erase(it);
+        else
+            throw ModelNotFoundException();
+    }
+    catch (exception &e)
+    {
+        cerr << e.what() << endl;
+    }
+    setPrompt();
+}
+
+void Ollama::help(void)
+{
+    cout << endl;
+    cout << BLUE "Available commands:" RESET << endl;
+    cout << GREEN "/list: " RESET "list all models" << endl;
+    cout << GREEN "/add [model]: " RESET "add a model" << endl;
+    cout << GREEN "/remove [model]: " RESET "remove a model" << endl;
+    cout << GREEN "/set-meta [model]: " RESET "set a specific model to Meta-Model" << endl;
+    cout << GREEN "/rm-meta [model]: " RESET "remove the Meta-model" << endl;
+    cout << GREEN "/ask: " RESET "ask selected models" << endl;
+    cout << GREEN "/exit: " RESET "exit" << endl;
+    cout << endl;
+}
+
+void Ollama::setMeta(string cmd)
+{
+    try
+    {
+        if (cmd.size() < 10)
+            throw ModelNotFoundException();
+        string name = cmd.substr(10);
+        Model *model = getModelByName(name);
+        // SET META MODEL
+        (void)model;
+    }
+    catch (exception &e)
+    {
+        cerr << e.what() << endl;
+    }
+}
+
+void Ollama::removeMeta(string cmd)
+{
+    try
+    {
+        if (cmd.size() < 9)
+            throw ModelNotFoundException();
+        string name = cmd.substr(9);
+        Model *model = getModelByName(name);
+        // REMOVE META MODEL
+        (void)model;
+    }
+    catch (exception &e)
+    {
+        cerr << e.what() << endl;
+    }
+}
+
+void Ollama::ask(string cmd)
+{
+    if (_effectiveModels.size() == 0)
+        cout << RED "No models selected" RESET << endl;
+    else
+    {
+        setQuestion(cmd);
+        askModels(_effectiveModels);
+    }
+}
+
+void modelHeader(string name)
+{
+    cout << endl;
+    cout << CYAN "Model: " RESET << name << endl;
 }
