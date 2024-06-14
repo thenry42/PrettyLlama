@@ -5,6 +5,7 @@
 SRCS		=	src/main.cpp \
 				src/Model.cpp \
 				src/Ollama.cpp \
+				src/History.cpp \
 
 NAME		=	PrettyLlama
 
@@ -23,7 +24,7 @@ INC		=	-I inc/
 all:			${NAME}
 
 ${NAME}:		${OBJS}
-				${CXX} ${INC} ${CXXFLAGS} $^ -o $@
+				${CXX} ${INC} ${CXXFLAGS} -lreadline $^ -o $@
 
 ${OBJDIR}/%.o:	%.cpp | ${OBJDIR}
 				${CXX} ${INC} ${CXXFLAGS} -MMD -MP -c $< -o $@

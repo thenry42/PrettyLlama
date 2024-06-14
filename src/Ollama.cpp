@@ -106,7 +106,7 @@ void Ollama::setPrompt(void)
         _prompt = RED "PrettyLlama(" BLUE;
         for (auto it = _effectiveModels.begin(); it != _effectiveModels.end(); it++)
             _prompt += string(it->first) + "/";
-        _prompt.erase(_prompt.size() - 2);
+        _prompt.erase(_prompt.size() - 1);
         _prompt += RED ") > " RESET;
     }
 }
@@ -124,9 +124,9 @@ int Ollama::handleCommand(string cmd)
         printModels();
     else if (cmd.find("/add") != string::npos)
     {
-        string name = cmd.substr(5); 
         try
         {
+            string name = cmd.substr(5); 
             _effectiveModels[name] = getModelByName(name);
         }
         catch (exception &e)
@@ -135,19 +135,24 @@ int Ollama::handleCommand(string cmd)
         }
         setPrompt();
     }
-    else if (cmd == "/remove")
+    else if (cmd.find("/remove") != string::npos)
     {
-        string name = cmd.substr(5); 
         try
         {
-            _effectiveModels.erase(name);
+            string name = cmd.substr(8); 
+            auto it = _effectiveModels.find(name);
+            if (it != _effectiveModels.end())
+                _effectiveModels.erase(it);
+            else
+                throw ModelNotFoundException();
         }
         catch (exception &e)
         {
             cerr << e.what() << endl;
-        } 
+        }
+        setPrompt(); 
     }
-    else if (cmd == "/help")
+    else if (cmd.find("/help") != string::npos)
     {
         cout << endl;
         cout << BLUE "Available commands:" RESET << endl;
@@ -165,7 +170,6 @@ int Ollama::handleCommand(string cmd)
             cout << RED "No models selected" RESET << endl;
             return (0);
         }
-
     }
 
     return (0);

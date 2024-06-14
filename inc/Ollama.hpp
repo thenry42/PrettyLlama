@@ -11,7 +11,7 @@
 #include <cstring>
 #include "Model.hpp"
 
-#define WELCOME_FILE "Welcome.txt"
+#define WELCOME_FILE "utils/WelcomeHeader"
 
 #define RED "\033[1;31m"
 #define GREEN "\033[1;32m"
