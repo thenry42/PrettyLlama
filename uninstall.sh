@@ -9,11 +9,11 @@ fi
 # Define variables (must match those used in install.sh)
 EXECUTABLE_NAME="PrettyLlama"
 DESKTOP_FILE_NAME="${EXECUTABLE_NAME}.desktop"
-LOGO_FILE_NAME="PrettyLlama.png"
+LOGO_FILE_NAME="${EXECUTABLE_NAME}.png"
 
 EXECUTABLE_PATH="/usr/bin/${EXECUTABLE_NAME}"
-DESKTOP_FILE_PATH="${HOME}/Desktop/${DESKTOP_FILE_NAME}"
-LOGO_PATH="/usr/share/icons/${EXECUTABLE_NAME}/${LOGO_FILE_NAME}"
+DESKTOP_FILE_PATH="/usr/share/applications/${DESKTOP_FILE_NAME}"
+LOGO_PATH="/usr/share/icons/${LOGO_FILE_NAME}"
 
 # Remove executable from /usr/bin
 if [ -f "${EXECUTABLE_PATH}" ]; then
