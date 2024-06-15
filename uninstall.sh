@@ -31,14 +31,20 @@ else
   echo "${DESKTOP_FILE_PATH} not found, skipping removal"
 fi
 
-# Remove logo file and its directory
+# Remove logo file
 if [ -f "${LOGO_PATH}" ]; then
   rm "${LOGO_PATH}"
   echo "Removed ${LOGO_PATH}"
-  rmdir "/usr/share/icons/${EXECUTABLE_NAME}"
-  echo "Removed /usr/share/icons/${EXECUTABLE_NAME}"
 else
   echo "${LOGO_PATH} not found, skipping removal"
+fi
+
+# Remove /usr/share/PrettyLlama directory
+if test -d "/usr/share/${EXECUTABLE_NAME}"; then
+  rm -r -f "/usr/share/${EXECUTABLE_NAME}"
+  echo "Removed /usr/share/${EXECUTABLE_NAME}"
+else
+  echo "/usr/share/PrettyLlama not found, skipping removal"
 fi
 
 echo "Uninstallation complete!"

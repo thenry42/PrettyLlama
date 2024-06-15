@@ -13,7 +13,7 @@
 #include <cstring>
 #include "Model.hpp"
 
-#define WELCOME_FILE "utils/WelcomeHeader"
+#define WELCOME_FILE "/usr/share/PrettyLlama/WelcomeHeader"
 
 #define RED "\033[1;31m"
 #define GREEN "\033[1;32m"
