@@ -118,11 +118,13 @@ int Ollama::handleCommand(string cmd)
         remove(cmd);
     else if (cmd.find("/help") != string::npos)
         help();
-    else if (cmd.find("/set-meta") != string::npos)
-        setMeta(cmd);
-    else if (cmd.find("/rm-meta") != string::npos)
-        removeMeta(cmd);
-    else
+    else if (cmd.find("/set-super") != string::npos)
+        setSuper(cmd);
+    else if (cmd.find("/rm-super") != string::npos)
+        removeSuper(cmd);
+    else if (cmd.find('/') != string::npos)
+        cout << RED "Invalid command" RESET << endl;
+    else    
         ask(cmd); // ASK MODEL(S)
     return (0);
 }
@@ -191,13 +193,13 @@ void Ollama::help(void)
     cout << endl;
 }
 
-void Ollama::setMeta(string cmd)
+void Ollama::setSuper(string cmd)
 {
     try
     {
-        if (cmd.size() < 10)
+        if (cmd.size() < 11)
             throw ModelNotFoundException();
-        string name = cmd.substr(10);
+        string name = cmd.substr(11);
         Model *model = getModelByName(name);
         
         // SET META MODEL
@@ -211,13 +213,13 @@ void Ollama::setMeta(string cmd)
     setPrompt();
 }
 
-void Ollama::removeMeta(string cmd)
+void Ollama::removeSuper(string cmd)
 {
     try
     {
-        if (cmd.size() < 9)
+        if (cmd.size() < 10)
             throw ModelNotFoundException();
-        string name = cmd.substr(9);
+        string name = cmd.substr(10);
         Model *model = getModelByName(name);
     
         // REMOVE META MODEL
@@ -237,6 +239,11 @@ void Ollama::ask(string cmd)
 {
     if (_effectiveModels.size() == 0)
         cout << RED "No models selected" RESET << endl;
+    else if (_superModelSet == true)
+    {
+        setQuestion(cmd);
+        askSuperModel(_effectiveModels, _superModel);
+    }
     else
     {
         setQuestion(cmd);
@@ -248,7 +255,58 @@ void Ollama::modelHeader(string name)
 {
     cout << endl;
     if (_superModelSet == true && _superModel->getName() == name)
-        cout << CYAN "Meta-Model: " RESET << name << endl;
+        cout << CYAN "Super-Model: " RESET << name << endl;
     else
         cout << BLUE "Model: " RESET << name << endl;
+}
+
+void Ollama::askSuperModel(map<string, Model*> effectiveModels, Model *superModel)
+{
+    modelHeader(superModel->getName());
+
+    string fullAnswer;
+
+    for (map<string, Model*>::iterator it = effectiveModels.begin(); it != effectiveModels.end(); it++)
+    {
+        string cmd = "ollama run " + it->first + " \"" + getQuestion() + "\"";
+        FILE *pipe = popen(cmd.c_str(), "r");
+        if (!pipe)
+        {
+            cerr << "popen failed" << endl;
+            return ;
+        }
+        char buffer[256];
+        string result = "";
+        while (!feof(pipe))
+        {
+            if (fgets(buffer, 256, pipe) != NULL)
+                result += buffer;
+        }
+        pclose(pipe);
+        fullAnswer += result;
+        fullAnswer += "\n";
+    }
+
+    fullAnswer = escapeSpecialCharacters(fullAnswer);
+    string cmd2 = "ollama run " + _superModel->getName() + " \" " + fullAnswer + " \"" + " | glow";
+    system(cmd2.c_str());
+}
+
+string escapeSpecialCharacters(string str)
+{
+    std::unordered_set<char> specialChars ={
+        '*', '?', '[', ']', '{', '}', '$', '`', '&', ';', '|', '>', '<', '(', ')', 
+        '!', '#', '~', '"', '\'', '\\', '=', '+', '-', '/', ' ', ':', '%', '@', '^'
+    };
+
+    string result;
+
+    for (char c: str)
+    {
+        if (specialChars.find(c) != specialChars.end())
+            result += '\\';
+        result += c;
+    } 
+
+    return (result);
 }

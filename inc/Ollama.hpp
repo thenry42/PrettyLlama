@@ -6,6 +6,8 @@
 #include <sstream>
 #include <string>
 #include <map>
+#include <set>
+#include <unordered_set>
 #include <cstdio>
 #include <vector>
 #include <cstring>
@@ -47,6 +49,7 @@ class Ollama
 		
 		void printModels(void);
 		void askModels(map<string, Model*> models);
+		void askSuperModel(map<string, Model*> effectiveModels, Model *superModel);
 		void askOneModel(Model *model);
 		int handleCommand(string cmd);
 		void printWelcome(void);
@@ -70,12 +73,14 @@ class Ollama
 
 		void add(string cmd);
 		void remove(string cmd);
-		void setMeta(string cmd);
-		void removeMeta(string cmd);
+		void setSuper(string cmd);
+		void removeSuper(string cmd);
 		void help(void);
 		void ask(string cmd);
 
 		void modelHeader(string modelName);
 };
+
+string escapeSpecialCharacters(string str);
 
 #endif
