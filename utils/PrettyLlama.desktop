@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=PrettyLlama
 Comment=Local program to run LLMs
-Exec=/home/tibzer/Portfolio/PrettyLlama/PrettyLlama
+Exec="gnome-terminal --full-screen -- /home/tibzer/Portfolio/PrettyLlama/PrettyLlama"
 Icon=/home/tibzer/Portfolio/PrettyLlama/Ollama.png
 Type=Application
