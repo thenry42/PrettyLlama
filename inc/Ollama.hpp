@@ -31,8 +31,8 @@ class Ollama
 
 		map<string, Model*> _models;
 		map<string, Model*> _effectiveModels;
-		Model* _metaModel;
-		bool _metaModelSet;
+		Model* _superModel;
+		bool _superModelSet;
 		string _prompt;
 		string _question;
 	

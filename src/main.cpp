@@ -1,6 +1,5 @@
 #include "Ollama.hpp"
 #include "Model.hpp"
-#include "History.hpp"
 
 int	main(void)
 {
@@ -15,8 +14,11 @@ int	main(void)
 		cout << jarvis.getPrompt();
 
 		// Get User Input
-		getline(cin, jarvis.cmd);
-		addToHistory(jarvis.cmd);
+		if (!getline(cin, jarvis.cmd))
+		{
+			if (cin.eof())
+				break ;
+		}
 
 		// Handle Command
 		if (jarvis.handleCommand(jarvis.cmd) == -1)

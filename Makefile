@@ -1,11 +1,10 @@
 #===================================================================#
-# MAKEFILE RULES                                                    #
+#                        MAKEFILE RULES                             #
 #===================================================================#
 
 SRCS		=	src/main.cpp \
 				src/Model.cpp \
 				src/Ollama.cpp \
-				src/History.cpp \
 
 NAME		=	PrettyLlama
 

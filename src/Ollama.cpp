@@ -91,7 +91,7 @@ void Ollama::setPrompt(void)
         _prompt = RED "PrettyLlama(" BLUE;
         for (auto it = _effectiveModels.begin(); it != _effectiveModels.end(); it++)
         {
-            if (_metaModelSet == true && it->first == _metaModel->getName())
+            if (_superModelSet == true && it->first == _superModel->getName())
                 _prompt += string(CYAN) + it->first + string(BLUE) + "/";
             else
                 _prompt += string(BLUE) + it->first + "/";
@@ -181,13 +181,13 @@ void Ollama::help(void)
 {
     cout << endl;
     cout << BLUE "Available commands:" RESET << endl;
-    cout << GREEN "/list: " RESET "list all models" << endl;
-    cout << GREEN "/add [model]: " RESET "add a model" << endl;
-    cout << GREEN "/remove [model]: " RESET "remove a model" << endl;
-    cout << GREEN "/set-meta [model]: " RESET "set a specific model to Meta-Model" << endl;
-    cout << GREEN "/rm-meta [model]: " RESET "remove the Meta-model" << endl;
-    cout << GREEN "/ask: " RESET "ask selected models" << endl;
-    cout << GREEN "/exit OR /quit: " RESET "exit" << endl;
+    cout << GREEN "/list: " RESET "List all models" << endl;
+    cout << GREEN "/add [model]: " RESET "Add a model" << endl;
+    cout << GREEN "/remove [model]: " RESET "Remove a model" << endl;
+    cout << GREEN "/set-super [model]: " RESET "Set model as Super-Model" << endl;
+    cout << GREEN "/rm-super [model]: " RESET "Remove the Super-model" << endl;
+    cout << GREEN "/ask: " RESET "Ask selected models" << endl;
+    cout << GREEN "/exit OR /quit: " RESET "Exit" << endl;
     cout << endl;
 }
 
@@ -201,8 +201,8 @@ void Ollama::setMeta(string cmd)
         Model *model = getModelByName(name);
         
         // SET META MODEL
-        _metaModelSet = true;
-        _metaModel = model;
+        _superModelSet = true;
+        _superModel = model;
     }
     catch (exception &e)
     {
@@ -221,8 +221,8 @@ void Ollama::removeMeta(string cmd)
         Model *model = getModelByName(name);
     
         // REMOVE META MODEL
-        if (_metaModelSet == true && _metaModel->getName() == model->getName())
-            _metaModelSet = false;
+        if (_superModelSet == true && _superModel->getName() == model->getName())
+            _superModelSet = false;
         else
             throw ModelNotFoundException();
     }
@@ -247,7 +247,7 @@ void Ollama::ask(string cmd)
 void Ollama::modelHeader(string name)
 {
     cout << endl;
-    if (_metaModelSet == true && _metaModel->getName() == name)
+    if (_superModelSet == true && _superModel->getName() == name)
         cout << CYAN "Meta-Model: " RESET << name << endl;
     else
         cout << BLUE "Model: " RESET << name << endl;
