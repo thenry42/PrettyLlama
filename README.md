@@ -1,4 +1,4 @@
-# PrettyLlama
+# PrettyLlama (WIP)
 
 <p align="center">
   <img src="https://github.com/thenry42/PrettyLlama/blob/main/utils/PrettyLlama.png" alt="Project Logo" width="300" height="300">
