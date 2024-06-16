@@ -33,14 +33,45 @@ Answers will always be rendered using Glow, for better readability.
 ## Installation
 
 ### Prerequisites
-First, you need to install [Ollama](https://github.com/ollama/ollama).
+First, you need to install [Ollama](https://github.com/ollama/ollama), and download the models you are interested in.
 
 Secondly, you need to install [Glow](https://github.com/charmbracelet/glow).
 
 ### Get PrettyLlama
-Clone this repository
+Clone this repository:
 ```bash
-git clone 
+git clone https://github.com/thenry42/PrettyLlama.git
+```
+
+Then Make:
+```bash
+make
+```
+
+If everything works fine and the binary file has been properly created, you may install the program by running the following command:
+```bash
+sudo ./install.sh
+```
+
+Note: you can undo this by using the uninstall.sh script.
+```bash
+sudo ./uninstall.sh
 ```
 
 ## Usage
+
+### Launch the program in a Terminal
+
+Once the installation is complete, you can simply launch the program by running the following command in your terminal:
+```bash
+PrettyLlama
+```
+
+### Launch using the application (desktop file)
+
+Assuming the installation went well, you can launch the program by clicking on its icon in the App panel. It should open a new window.
+
+Note that the desktop file use ```gnome-terminal```. You can also pin the app to the Dashboard for quick access.
+
+### How it works ?
+
