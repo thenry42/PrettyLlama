@@ -22,7 +22,7 @@
 PrettyLlama is a Simple CLI tool that allows to run ollama models and render their answers in Markdown.
 
 ## Features
-Keep in my that this project is only available on Linux and is still a work in progress.
+Keep in mind that this project is only available on Linux and is still a work in progress.
 
 You will be able to: 
 - Run a single model or multiple models at the same time with a single prompt.
