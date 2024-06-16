@@ -122,7 +122,7 @@ int Ollama::handleCommand(string cmd)
         setSuper(cmd);
     else if (cmd.find("/rm-super") != string::npos)
         removeSuper();
-    else if (cmd.find('/') != string::npos)
+    else if (cmd[0] == '/' && cmd.find('/') != string::npos)
         cout << RED "Invalid command" RESET << endl;
     else
         ask(cmd); // ASK MODEL(S)
