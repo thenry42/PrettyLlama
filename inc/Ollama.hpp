@@ -71,11 +71,20 @@ class Ollama
 					return (RED "Model not found" RESET);
 				}
 		};
+		
+		class SuperModelNotFoundException : public exception
+		{
+			public:
+				virtual const char* what() const throw()
+				{
+					return (RED "Super Model not found" RESET);
+				}
+		};
 
 		void add(string cmd);
 		void remove(string cmd);
 		void setSuper(string cmd);
-		void removeSuper(string cmd);
+		void removeSuper(void);
 		void help(void);
 		void ask(string cmd);
 

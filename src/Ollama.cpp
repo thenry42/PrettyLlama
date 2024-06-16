@@ -121,7 +121,7 @@ int Ollama::handleCommand(string cmd)
     else if (cmd.find("/set-super") != string::npos)
         setSuper(cmd);
     else if (cmd.find("/rm-super") != string::npos)
-        removeSuper(cmd);
+        removeSuper();
     else if (cmd.find('/') != string::npos)
         cout << RED "Invalid command" RESET << endl;
     else    
@@ -212,20 +212,15 @@ void Ollama::setSuper(string cmd)
     setPrompt();
 }
 
-void Ollama::removeSuper(string cmd)
+void Ollama::removeSuper(void)
 {
     try
     {
-        if (cmd.size() < 10)
-            throw ModelNotFoundException();
-        string name = cmd.substr(10);
-        Model *model = getModelByName(name);
-    
         // REMOVE META MODEL
-        if (_superModelSet == true && _superModel->getName() == model->getName())
+        if (_superModelSet == true)
             _superModelSet = false;
         else
-            throw ModelNotFoundException();
+            throw SuperModelNotFoundException();
     }
     catch (exception &e)
     {
