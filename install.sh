@@ -39,5 +39,6 @@ chmod +x "${DESKTOP_FILE_PATH}"
 # Copy PrettyLlama directory in /usr/share/ to store random files
 mkdir "/usr/share/${EXECUTABLE_NAME}"
 cp "./utils/WelcomeHeader" "/usr/share/${EXECUTABLE_NAME}/"
+cp "./utils/HelpFile" "/usr/share/${EXECUTABLE_NAME}/"
 
 echo "Installation complete!"

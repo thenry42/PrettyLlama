@@ -131,6 +131,11 @@ int Ollama::handleCommand(string cmd)
 
 void Ollama::printWelcome(void)
 {
+    string welcome = WELCOME_FILE;
+    string cmd = "cat " + welcome + " | glow";
+    system(cmd.c_str());
+
+    /*
     ifstream file(WELCOME_FILE);
     if (file.is_open())
     {
@@ -141,6 +146,7 @@ void Ollama::printWelcome(void)
     }
     else
         cerr << "Unable to open file" << endl;
+    */
 }
 
 void Ollama::add(string cmd)
@@ -181,16 +187,9 @@ void Ollama::remove(string cmd)
 
 void Ollama::help(void)
 {
-    cout << endl;
-    cout << BLUE "Available commands:" RESET << endl;
-    cout << GREEN "/list: " RESET "List all models" << endl;
-    cout << GREEN "/add [model]: " RESET "Add a model" << endl;
-    cout << GREEN "/remove [model]: " RESET "Remove a model" << endl;
-    cout << GREEN "/set-super [model]: " RESET "Set model as Super-Model" << endl;
-    cout << GREEN "/rm-super [model]: " RESET "Remove the Super-model" << endl;
-    cout << GREEN "/ask: " RESET "Ask selected models" << endl;
-    cout << GREEN "/exit OR /quit: " RESET "Exit" << endl;
-    cout << endl;
+    string help = HELP_FILE;
+    string cmd = "cat " + help + " | glow";
+    system(cmd.c_str());
 }
 
 void Ollama::setSuper(string cmd)

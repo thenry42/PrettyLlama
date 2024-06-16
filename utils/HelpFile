@@ -1,0 +1,19 @@
+
+
+
+██╗  ██╗███████╗██╗     ██████╗ 
+██║  ██║██╔════╝██║     ██╔══██╗
+███████║█████╗  ██║     ██████╔╝
+██╔══██║██╔══╝  ██║     ██╔═══╝ 
+██║  ██║███████╗███████╗██║     
+╚═╝  ╚═╝╚══════╝╚══════╝╚═╝     
+                                
+
+```/list```                                   # List all the available models
+```/add [model-1] [model-2] ...```            # Add one or multiple models to the effective list of models
+```/remove [model-1] [model-2] ...```         # Remove one or multiple models from the effective list of models
+```/set-super [model]```                      # Set the Super-Model. It has to be one of the effective models
+```/rm-super [model]```                       # Remove the Super-Model. It remains one of the effective models.
+```/help```                                   # Show this help message :)
+```/exit or /quit or ^C or ^D```              # Exit the program
+
