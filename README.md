@@ -48,13 +48,15 @@ Then Make:
 make
 ```
 
-If everything works fine and the binary file has been properly created, you may install the program by running the following command:
+If everything works fine and the binary file has been properly created, you may install the program by running the following commands:
 ```bash
+sudo chmod +x install.sh
 sudo ./install.sh
 ```
 
 Note: you can undo this by using the uninstall.sh script.
 ```bash
+sudo chmod +x uninstall.sh
 sudo ./uninstall.sh
 ```
 
