@@ -15,6 +15,7 @@
 
 #define WELCOME_FILE "/usr/share/PrettyLlama/WelcomeHeader"
 #define HELP_FILE "/usr/share/PrettyLlama/HelpFile"
+#define GET_OLLAMA_LIST "ollama list | awk '{print $1}' | sed 's/:latest//' | tail -n +2"
 
 #define RED "\033[1;31m"
 #define GREEN "\033[1;32m"

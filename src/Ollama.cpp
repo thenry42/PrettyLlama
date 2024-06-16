@@ -14,7 +14,7 @@ Ollama &Ollama::operator=(const Ollama &)
 void Ollama::getOllamaList(void)
 {
     // GET ALL MODELS (NAME)
-    string cmd = "ollama list | awk '{print $1}' | sed 's/:latest//' | tail -n +2";
+    string cmd = GET_OLLAMA_LIST;
     FILE *pipe = popen(cmd.c_str(), "r");
     if (!pipe)
     {
