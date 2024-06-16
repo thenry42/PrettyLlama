@@ -22,12 +22,19 @@
 PrettyLlama is a Simple CLI tool that allows to run ollama models and render their answers in Markdown.
 
 ## Features
+Keep in my that this project is only available on Linux and is still a work in progress.
+
+You will be able to: 
+- Run a single model or multiple models at the same time with a single prompt.
+- Ask a model to synthesize the answers of other models, using the "Super-model" feature (WIP).
+
+Answers will always be rendered using Glow, for better readability.
 
 ## Installation
 
 ### Prerequisites
-
 First, you need to install [Ollama](https://github.com/ollama/ollama).
+
 Secondly, you need to install [Glow](https://github.com/charmbracelet/glow).
 
 ### Get PrettyLlama
