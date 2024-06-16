@@ -124,7 +124,7 @@ int Ollama::handleCommand(string cmd)
         removeSuper();
     else if (cmd.find('/') != string::npos)
         cout << RED "Invalid command" RESET << endl;
-    else    
+    else
         ask(cmd); // ASK MODEL(S)
     return (0);
 }
