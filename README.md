@@ -71,7 +71,9 @@ PrettyLlama
 
 Assuming the installation went well, you can launch the program by clicking on its icon in the App panel. It should open a new window.
 
-Note that the desktop file use ```gnome-terminal```. You can also pin the app to the Dashboard for quick access.
+You can also pin the app to your Dashboard for quick access.
+
+Note that the desktop file use ```gnome-terminal``` to open a new terminal.
 
 ### How it works ?
 
