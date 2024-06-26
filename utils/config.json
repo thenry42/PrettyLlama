@@ -1,10 +1,9 @@
 {
     "EffectiveModels": [
         "llama3",
-        "phi3",
         "codegemma"
     ],
     "SuperModel": {
-        "name": "llama3"
+        "name": null
     }
 }
