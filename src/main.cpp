@@ -4,10 +4,12 @@
 int	main(void)
 {
 	Ollama jarvis;
-	
+
 	jarvis.getOllamaList();
 	jarvis.printWelcome();
 	jarvis.setPrompt();
+
+	jarvis.config();
 
 	while (true)
 	{

@@ -122,6 +122,8 @@ int Ollama::handleCommand(string cmd)
         setSuper(cmd);
     else if (cmd.find("/rm-super") != string::npos)
         removeSuper();
+    else if (cmd.find("/config") != string::npos)
+        config();
     else if (cmd[0] == '/' && cmd.find('/') != string::npos)
         cout << RED "Invalid command" RESET << endl;
     else
@@ -134,19 +136,6 @@ void Ollama::printWelcome(void)
     string welcome = WELCOME_FILE;
     string cmd = "cat " + welcome + " | glow";
     system(cmd.c_str());
-
-    /*
-    ifstream file(WELCOME_FILE);
-    if (file.is_open())
-    {
-        string line;
-        while (getline(file, line))
-            cout << line << endl;
-        file.close();
-    }
-    else
-        cerr << "Unable to open file" << endl;
-    */
 }
 
 void Ollama::add(string cmd)
@@ -155,8 +144,13 @@ void Ollama::add(string cmd)
     {
         if (cmd.size() < 5)
             throw ModelNotFoundException();
-        string name = cmd.substr(5);
-        _effectiveModels[name] = getModelByName(name);
+        string str = cmd.substr(5);
+        std::istringstream ss(str);
+        string model;
+        while (ss >> model)
+        {
+            _effectiveModels[model] = getModelByName(model);
+        }
     }
     catch (exception &e)
     {
@@ -171,12 +165,17 @@ void Ollama::remove(string cmd)
     {
         if (cmd.size() < 8)
             throw ModelNotFoundException();
-        string name = cmd.substr(8);
-        auto it = _effectiveModels.find(name);
-        if (it != _effectiveModels.end())
-            _effectiveModels.erase(it);
-        else
-            throw ModelNotFoundException();
+        string str = cmd.substr(8);
+        std::istringstream ss(str);
+        string model;
+        while (ss >> model)
+        {
+            auto it = _effectiveModels.find(model);
+            if (it != _effectiveModels.end())
+                _effectiveModels.erase(it);
+            else
+                throw ModelNotFoundException();
+        }
     }
     catch (exception &e)
     {
@@ -227,6 +226,69 @@ void Ollama::removeSuper(void)
         cerr << e.what() << endl;
     }
     setPrompt();
+}
+
+void Ollama::extractModelsFromConfig(json &j)
+{
+    if (j.contains("EffectiveModels"))
+    {
+        for (auto& model : j["EffectiveModels"])
+        {
+            if (model.is_string())
+            {
+                string name = model.get<string>();
+                _effectiveModels[name] = getModelByName(name);
+            }
+        }
+    }
+    if (j.contains("SuperModel") && j["SuperModel"].is_object())
+    {
+        if (j["SuperModel"].contains("name"))
+        {
+            if (j["SuperModel"]["name"].is_string())
+            {
+                std::string superModelName = j["SuperModel"]["name"].get<std::string>();
+                //std::cout << "SuperModel: " << superModelName << std::endl;
+                _superModel = getModelByName(superModelName);
+                _superModelSet = true;
+            } 
+            else 
+            {
+                std::cerr << "SuperModel name is not a string" << std::endl;
+            }
+        }
+        else
+        {
+            std::cerr << "SuperModel does not contain the name key" << std::endl;
+        }
+    }
+    else
+    {
+        std::cerr << "SuperModel is missing or not an object" << std::endl;
+    }
+    setPrompt();
+}
+
+void Ollama::config(void)
+{
+    ifstream file(CONFIG_FILE);
+    if (!file.is_open())
+    {
+        cerr << "Error: Could not open file" << endl;
+        return ;
+    }
+    
+    try
+    {
+        file >> this->j;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    
+    extractModelsFromConfig(this->j);
+
 }
 
 void Ollama::ask(string cmd)

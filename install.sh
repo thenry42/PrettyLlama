@@ -40,5 +40,6 @@ chmod +x "${DESKTOP_FILE_PATH}"
 mkdir "/usr/share/${EXECUTABLE_NAME}"
 cp "./utils/WelcomeHeader" "/usr/share/${EXECUTABLE_NAME}/"
 cp "./utils/HelpFile" "/usr/share/${EXECUTABLE_NAME}/"
+cp "./utils/config.json" "/usr/share/${EXECUTABLE_NAME}/"
 
 echo "Installation complete!"

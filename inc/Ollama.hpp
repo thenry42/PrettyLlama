@@ -11,10 +11,13 @@
 #include <cstdio>
 #include <vector>
 #include <cstring>
+#include <nlohmann/json.hpp>
 #include "Model.hpp"
 
 #define WELCOME_FILE "/usr/share/PrettyLlama/WelcomeHeader"
 #define HELP_FILE "/usr/share/PrettyLlama/HelpFile"
+#define CONFIG_FILE "/usr/share/PrettyLlama/config.json"
+
 #define GET_OLLAMA_LIST "ollama list | awk '{print $1}' | sed 's/:latest//' | tail -n +2"
 
 #define RED "\033[1;31m"
@@ -26,6 +29,7 @@
 #define RESET "\033[0m"
 
 using namespace std;
+using json = nlohmann::json;
 
 class Model;
 
@@ -43,6 +47,7 @@ class Ollama
 	public:
 		
 		string cmd;
+		json j;
 		
 		Ollama(void);
 		Ollama(const Ollama &);
@@ -88,8 +93,10 @@ class Ollama
 		void removeSuper(void);
 		void help(void);
 		void ask(string cmd);
+		void config(void);
 
 		void modelHeader(string modelName);
+		void extractModelsFromConfig(json &j);
 };
 
 string escapeSpecialCharacters(string str);
