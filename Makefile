@@ -23,7 +23,7 @@ INC		=	-I inc/
 all:			${NAME}
 
 ${NAME}:		${OBJS}
-				${CXX} ${INC} ${CXXFLAGS} -lreadline $^ -o $@
+				${CXX} ${INC} ${CXXFLAGS} -lreadline -lncurses $^ -o $@
 
 ${OBJDIR}/%.o:	%.cpp | ${OBJDIR}
 				${CXX} ${INC} ${CXXFLAGS} -MMD -MP -c $< -o $@
