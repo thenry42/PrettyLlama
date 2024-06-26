@@ -14,7 +14,7 @@
 ```/remove [model-1] [model-2] ...```         # Remove one or multiple models from the effective list of models
 ```/set-super [model]```                      # Set the Super-Model. It has to be one of the effective models
 ```/rm-super```                               # Remove the Super-Model. It remains one of the effective models.
-```/config```                                 # Show and set the configuration
+```/config```                                 # Set the current configuration (for next time)
 ```/help```                                   # Show this help message :)
 ```/exit or /quit or ^C or ^D```              # Exit the program
 

@@ -42,4 +42,7 @@ cp "./utils/WelcomeHeader" "/usr/share/${EXECUTABLE_NAME}/"
 cp "./utils/HelpFile" "/usr/share/${EXECUTABLE_NAME}/"
 cp "./utils/config.json" "/usr/share/${EXECUTABLE_NAME}/"
 
+# Make json file read and write for all users
+chmod 666 "/usr/share/${EXECUTABLE_NAME}/config.json"
+
 echo "Installation complete!"

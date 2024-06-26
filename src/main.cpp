@@ -9,7 +9,7 @@ int	main(void)
 	jarvis.printWelcome();
 	jarvis.setPrompt();
 
-	jarvis.config();
+	jarvis.loadConfig();
 
 	while (true)
 	{

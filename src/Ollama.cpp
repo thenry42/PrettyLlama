@@ -123,7 +123,7 @@ int Ollama::handleCommand(string cmd)
     else if (cmd.find("/rm-super") != string::npos)
         removeSuper();
     else if (cmd.find("/config") != string::npos)
-        config();
+        setConfig();
     else if (cmd[0] == '/' && cmd.find('/') != string::npos)
         cout << RED "Invalid command" RESET << endl;
     else
@@ -248,28 +248,15 @@ void Ollama::extractModelsFromConfig(json &j)
             if (j["SuperModel"]["name"].is_string())
             {
                 std::string superModelName = j["SuperModel"]["name"].get<std::string>();
-                //std::cout << "SuperModel: " << superModelName << std::endl;
                 _superModel = getModelByName(superModelName);
                 _superModelSet = true;
             } 
-            else 
-            {
-                std::cerr << "SuperModel name is not a string" << std::endl;
-            }
         }
-        else
-        {
-            std::cerr << "SuperModel does not contain the name key" << std::endl;
-        }
-    }
-    else
-    {
-        std::cerr << "SuperModel is missing or not an object" << std::endl;
     }
     setPrompt();
 }
 
-void Ollama::config(void)
+void Ollama::loadConfig(void)
 {
     ifstream file(CONFIG_FILE);
     if (!file.is_open())
@@ -284,11 +271,55 @@ void Ollama::config(void)
     }
     catch(const std::exception& e)
     {
-        std::cerr << e.what() << '\n';
+        cerr << e.what() << endl;
     }
     
     extractModelsFromConfig(this->j);
 
+}
+
+void Ollama::setConfig(void)
+{
+    // Removing current Effective Models
+    if (j.contains("EffectiveModels"))
+        j["EffectiveModels"].clear();
+
+    // Removing current Super Model
+    if (j.contains("SuperModel"))
+        j["SuperModel"].clear();
+
+    // Adding new Effective Models
+    for (auto it = _effectiveModels.begin(); it != _effectiveModels.end(); it++)
+    {
+        j["EffectiveModels"].push_back(it->first);
+    }
+
+    // Adding new Super Model
+    if (_superModelSet == true)
+    {
+        j["SuperModel"]["name"] = _superModel->getName();
+    }
+
+    try
+    {
+        saveJsonToFile(j, CONFIG_FILE);
+    }
+    catch (const std::exception& e)
+    {
+        cerr << e.what() << endl;
+    }
+}
+
+void saveJsonToFile(json &j, string filename)
+{
+    ofstream file(filename);
+    if (!file.is_open())
+    {
+        cerr << "Error: Could not open file" << endl;
+        return ;
+    }
+    file << j.dump(4);
+    file.close();
 }
 
 void Ollama::ask(string cmd)

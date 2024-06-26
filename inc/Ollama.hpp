@@ -93,12 +93,14 @@ class Ollama
 		void removeSuper(void);
 		void help(void);
 		void ask(string cmd);
-		void config(void);
+		void loadConfig(void);
+		void setConfig(void);
 
 		void modelHeader(string modelName);
 		void extractModelsFromConfig(json &j);
 };
 
 string escapeSpecialCharacters(string str);
+void saveJsonToFile(json &j, string filename);
 
 #endif
