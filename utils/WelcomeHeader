@@ -16,6 +16,6 @@
 ```/rm-super```                                 # Remove the Super-Model. It remains one of the effective models
 ```/config```                                   # Set the current configuration (for next time)
 ```/help```                                     # Get help
-```/exit or /quit or ^C or ^D```                # Exit the program
+```/exit or /quit or ^D```                      # Exit the program
 
 
