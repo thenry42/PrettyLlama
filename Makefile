@@ -5,6 +5,8 @@
 SRCS		=	src/main.cpp \
 				src/Model.cpp \
 				src/Ollama.cpp \
+				src/Signals.cpp \
+				src/History.cpp \
 
 NAME		=	PrettyLlama
 

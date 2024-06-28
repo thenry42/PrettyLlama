@@ -1,5 +1,7 @@
-#include "Ollama.hpp"
 #include "Model.hpp"
+#include "Ollama.hpp"
+#include "Signals.hpp"
+#include "History.hpp"
 
 int	main(void)
 {
@@ -13,18 +15,26 @@ int	main(void)
 
 	while (true)
 	{
-		cout << jarvis.getPrompt();
+		// Set Signal Handler
+		setSignalHandler();
 
-		// Get User Input
-		if (!getline(cin, jarvis.cmd))
-		{
-			if (cin.eof())
-				break ;
-		}
+		// Get command from user
+		jarvis.command = readline(jarvis.getPrompt().c_str());
 
-		// Handle Command
-		if (jarvis.handleCommand(jarvis.cmd) == -1)
+		// Check if command is empty
+		if (jarvis.command == nullptr)
 			break ;
+
+		// Add command to history
+		if (history(jarvis.command))
+			add_history(jarvis.command);
+		else
+			continue;
+		
+		// Handle Command
+		if (jarvis.handleCommand(jarvis.command) == -1)
+			break ;
+		free(jarvis.command);
 	}
 
 	return (EXIT_SUCCESS);

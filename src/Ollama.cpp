@@ -1,6 +1,16 @@
 #include "Ollama.hpp"
 
-Ollama::Ollama() {}
+Ollama::Ollama()
+{
+    _models = map<string, Model*>();
+    _effectiveModels = map<string, Model*>();
+    _superModel = NULL;
+    _superModelSet = false;
+    _prompt = "";
+    _question = "";
+    cmd = "";
+    command = NULL;
+}
 
 Ollama::~Ollama() {}
 

@@ -47,6 +47,7 @@ class Ollama
 	public:
 		
 		string cmd;
+		char* command;
 		json j;
 		
 		Ollama(void);
