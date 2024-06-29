@@ -8,9 +8,8 @@ int	main(void)
 	Ollama jarvis;
 
 	jarvis.getOllamaList();
-	jarvis.printWelcome();
+	printWelcome();
 	jarvis.setPrompt();
-
 	jarvis.loadConfig();
 
 	while (true)
@@ -19,22 +18,24 @@ int	main(void)
 		setSignalHandler();
 
 		// Get command from user
-		jarvis.command = readline(jarvis.getPrompt().c_str());
+		jarvis.setCmd(readline(jarvis.getPrompt().c_str()));
 
 		// Check if command is empty
-		if (jarvis.command == nullptr)
+		if (jarvis.getCmd() == nullptr)
 			break ;
 
 		// Add command to history
-		if (history(jarvis.command))
-			add_history(jarvis.command);
-		else
-			continue;
+		if (!history(jarvis.getCmd()))
+			continue ;
+		add_history(jarvis.getCmd());
 		
 		// Handle Command
-		if (jarvis.handleCommand(jarvis.command) == -1)
+		if (jarvis.handleCommand(jarvis.getCmd()) == -1)
+		{
+			free(jarvis.getCmd());
 			break ;
-		free(jarvis.command);
+		}
+		free(jarvis.getCmd());
 	}
 
 	return (EXIT_SUCCESS);

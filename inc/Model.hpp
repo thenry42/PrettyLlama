@@ -10,8 +10,8 @@ class Model
 	private:
 
 		string 	_name;
-		string 	_question;
 		string 	_answer;
+		string 	_question;
 
 	public:
 		
@@ -20,10 +20,12 @@ class Model
 		Model &operator=(const Model &);	
 		~Model();
 
+		// Getters
 		string getName() const;
 		string getQuestion() const;
 		string getAnswer() const;
 
+		// Setters
 		void setQuestion(string question);
 		void setAnswer(string answer);
 };

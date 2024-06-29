@@ -8,8 +8,7 @@ Ollama::Ollama()
     _superModelSet = false;
     _prompt = "";
     _question = "";
-    cmd = "";
-    command = NULL;
+    _cmd = NULL;
 }
 
 Ollama::~Ollama() {}
@@ -19,6 +18,18 @@ Ollama::Ollama(const Ollama &) {}
 Ollama &Ollama::operator=(const Ollama &)
 {
     return (*this);
+}
+
+// GETTERS
+
+string Ollama::getPrompt(void)
+{
+    return (_prompt);
+}
+
+string Ollama::getQuestion(void)
+{
+    return (_question);
 }
 
 void Ollama::getOllamaList(void)
@@ -59,38 +70,12 @@ Model* Ollama::getModelByName(string name)
     return (_models[name]);
 }
 
-void Ollama::printModels()
+char* Ollama::getCmd(void)
 {
-    for (map<string, Model*>::iterator it = _models.begin(); it != _models.end(); it++)
-    {
-        cout << it->first << endl;
-    }
+    return (_cmd);
 }
 
-void Ollama::askModels(map<string, Model*> models)
-{
-    for (map<string, Model*>::iterator it = models.begin(); it != models.end(); it++)
-    {
-        askOneModel(it->second);
-    }
-}
-
-void Ollama::askOneModel(Model *model)
-{
-    modelHeader(model->getName());
-    string cmd = "ollama run " + model->getName() + " \"" + getQuestion() + "\"" + " | glow"; 
-    system(cmd.c_str());
-}
-
-string Ollama::getPrompt(void)
-{
-    return (_prompt);
-}
-
-string Ollama::getQuestion(void)
-{
-    return (_question);
-}
+// SETTERS
 
 void Ollama::setPrompt(void)
 {
@@ -114,6 +99,33 @@ void Ollama::setPrompt(void)
 void Ollama::setQuestion(string question)
 {
     _question = question;
+}
+
+void Ollama::setCmd(char* cmd)
+{
+    _cmd = cmd;
+}
+
+// METHODS
+
+void Ollama::printModels()
+{
+    system(PRINT_LIST);
+}
+
+void Ollama::askModels(map<string, Model*> models)
+{
+    for (map<string, Model*>::iterator it = models.begin(); it != models.end(); it++)
+    {
+        askOneModel(it->second);
+    }
+}
+
+void Ollama::askOneModel(Model *model)
+{
+    modelHeader(model->getName());
+    string cmd = "ollama run " + model->getName() + " \"" + getQuestion() + "\"" + " | glow"; 
+    system(cmd.c_str());
 }
 
 int Ollama::handleCommand(string cmd)
@@ -141,7 +153,7 @@ int Ollama::handleCommand(string cmd)
     return (0);
 }
 
-void Ollama::printWelcome(void)
+void printWelcome(void)
 {
     string welcome = WELCOME_FILE;
     string cmd = "cat " + welcome + " | glow";
@@ -277,42 +289,40 @@ void Ollama::loadConfig(void)
     
     try
     {
-        file >> this->j;
+        file >> _j;
     }
     catch(const std::exception& e)
     {
         cerr << e.what() << endl;
     }
-    
-    extractModelsFromConfig(this->j);
-
+    extractModelsFromConfig(_j);
 }
 
 void Ollama::setConfig(void)
 {
     // Removing current Effective Models
-    if (j.contains("EffectiveModels"))
-        j["EffectiveModels"].clear();
+    if (_j.contains("EffectiveModels"))
+        _j["EffectiveModels"].clear();
 
     // Removing current Super Model
-    if (j.contains("SuperModel"))
-        j["SuperModel"].clear();
+    if (_j.contains("SuperModel"))
+        _j["SuperModel"].clear();
 
     // Adding new Effective Models
     for (auto it = _effectiveModels.begin(); it != _effectiveModels.end(); it++)
     {
-        j["EffectiveModels"].push_back(it->first);
+        _j["EffectiveModels"].push_back(it->first);
     }
 
     // Adding new Super Model
     if (_superModelSet == true)
     {
-        j["SuperModel"]["name"] = _superModel->getName();
+        _j["SuperModel"]["name"] = _superModel->getName();
     }
 
     try
     {
-        saveJsonToFile(j, CONFIG_FILE);
+        saveJsonToFile(_j, CONFIG_FILE);
     }
     catch (const std::exception& e)
     {
@@ -372,11 +382,11 @@ void Ollama::askSuperModel(map<string, Model*> effectiveModels, Model *superMode
             cerr << "popen failed" << endl;
             return ;
         }
-        char buffer[256];
+        char buffer[512];
         string result = "";
         while (!feof(pipe))
         {
-            if (fgets(buffer, 256, pipe) != NULL)
+            if (fgets(buffer, 512, pipe) != NULL)
                 result += buffer;
         }
         pclose(pipe);
@@ -388,6 +398,8 @@ void Ollama::askSuperModel(map<string, Model*> effectiveModels, Model *superMode
     string cmd2 = "ollama run " + _superModel->getName() + " \" " + fullAnswer + " \"" + " | glow";
     system(cmd2.c_str());
 }
+
+// UTILS
 
 string escapeSpecialCharacters(string str)
 {

@@ -1,16 +1,16 @@
 #ifndef SIGNALS_HPP
 #define SIGNALS_HPP
 
-#include <signal.h>
-#include <sys/ioctl.h>
-#include <csignal>
-#include <iostream>
 #include <cstdio>
+#include <csignal>
+#include <signal.h>
+#include <iostream>
 #include <unistd.h>
-#include <readline/readline.h>
+#include <sys/ioctl.h>
 #include <readline/history.h>
+#include <readline/readline.h>
 
-void    signalHandler(int signum);
 void    setSignalHandler(void);
+void    signalHandler(int signum);
 
 #endif
