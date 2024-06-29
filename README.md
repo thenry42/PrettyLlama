@@ -79,3 +79,6 @@ Note that the desktop file use ```gnome-terminal``` to open a new terminal.
 
 ### How it works ?
 
+<p align="center">
+  <img src="https://github.com/thenry42/PrettyLlama/blob/main/utils/Usage_Example.png">
+</p>
