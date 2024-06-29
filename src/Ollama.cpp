@@ -395,7 +395,8 @@ void Ollama::askSuperModel(map<string, Model*> effectiveModels, Model *superMode
     }
 
     fullAnswer = escapeSpecialCharacters(fullAnswer);
-    string cmd2 = "ollama run " + _superModel->getName() + " \" " + fullAnswer + " \"" + " | glow";
+    string synthesis = "The question was " + getQuestion() + "\n" + "The answers to summerize are:\n";
+    string cmd2 = "ollama run " + _superModel->getName() + " \" " + synthesis + fullAnswer + " \"" + " | glow";
     system(cmd2.c_str());
 }
 
