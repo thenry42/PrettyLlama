@@ -323,6 +323,7 @@ void Ollama::setConfig(void)
     try
     {
         saveJsonToFile(_j, CONFIG_FILE);
+        cout << GREEN "Current config saved" RESET << endl;
     }
     catch (const std::exception& e)
     {
