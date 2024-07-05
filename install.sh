@@ -28,7 +28,7 @@ cat << EOF > "${DESKTOP_FILE_PATH}"
 [Desktop Entry]
 Name=PrettyLlama
 Comment=Simple CLI program to use ollama models in a nice looking way
-Exec=gnome-terminal --full-screen -- ${EXECUTABLE_NAME}
+Exec=gnome-terminal --maximize --hide-menubar -- ${EXECUTABLE_NAME}
 Icon=${LOGO_PATH}/${LOGO_FILE_NAME}
 Type=Application
 EOF
